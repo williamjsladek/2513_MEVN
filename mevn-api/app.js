@@ -3,9 +3,11 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 
 var book = require('./routes/book');
 var app = express();
+app.use(cors())
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
