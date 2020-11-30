@@ -2,6 +2,10 @@
     <div>
         <h1>Book List</h1>
 
+        <div v-if="pleaseWait" class="text-warning">
+            <h3>Please wait...</h3>
+        </div>
+
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -69,6 +73,9 @@
             </form>
         </div>        
 
+        <br/>
+        <br/>
+
     </div>
 </template>
 
@@ -90,15 +97,19 @@ export default {
     data () {
         return {
             books: [],
-            model: {}
+            model: {},
+            pleaseWait: false
         }
     },
     created () {
         this.getData()
     },
     methods: {
+        getUrl() {
+            return 'http://localhost:8080'
+        },
         getData () {
-            axios.get('http://localhost:3000/book')
+            axios.get(this.getUrl() + '/book')
             .then(response => {
                 this.books = response.data
             })
@@ -114,7 +125,7 @@ export default {
         },
         deleteBook (bookid) {
             if (confirm('Are you sure you want to delete this post?')) {
-                axios.delete('http://localhost:3000/book/' + bookid)
+                axios.delete(this.getUrl() + '/book/' + bookid)
                 .then((result) => {
                     console.log(result)
                     this.getData()
@@ -128,7 +139,7 @@ export default {
             console.log(this.model)
             console.log('this.model._id: ' + this.model._id)
             if  (this.model._id === undefined) {
-                axios.post(`http://localhost:3000/book`, this.model)
+                axios.post(this.getUrl() + '/book', this.model)
                 .then(response => {
                     console.log(response)
                     this.getData()
@@ -138,7 +149,7 @@ export default {
                     console.log(e)
                 })
             } else {
-                axios.put(`http://localhost:3000/book/` + this.model._id, this.model)
+                axios.put(this.getUrl() + '/book/' + this.model._id, this.model)
                 .then(response => {
                     console.log(response)
                     this.getData()
