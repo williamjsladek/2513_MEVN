@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h3>Welcome</h3>
-    <p>Visit the book list.</p>
+    <p>Go to fish page.</p>
   </div>
 </template>
 
